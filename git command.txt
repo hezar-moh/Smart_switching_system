@@ -6,4 +6,4 @@ git remote add origin https://github.com/hezar-moh/Smart_switching_system.git
 git push -u origin main
 
 
-###run full of that once you do any changes
+###run full of that code above(copy and paste after you activate your path) once you do any changes
