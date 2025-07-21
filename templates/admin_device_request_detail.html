@@ -1,0 +1,58 @@
+{% extends 'base_dashboard.html' %}
+{% load static %}
+{% load custom_filters %}
+
+{% block title %}Device Requests Detail | Admin Panel{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <h1>Requests for {{ user.username }}</h1>
+
+    <div class="request-card">
+        <div class="user-info">
+            <p><strong>User:</strong> {{ user.username }}</p>
+            <p><strong>Email:</strong> {{ user.email }}</p>
+            <p><strong>Phone:</strong> {{ user.userprofile.phone_number }}</p>
+        </div>
+<form method="POST" action="{% url 'admin_approve_user_request' user.id %}">
+    {% csrf_token %}
+
+    <!-- LETS Add this dropdown once for the whole user -->
+    <div class="form-group mb-3">
+      <label for="esp_ip"><strong>Select ESP32 IP for this user:</strong></label>
+      <select name="esp_ip" id="esp_ip" required>
+        <option value="">-- Select ESP32 IP --</option>
+        {% for esp in esp_devices %}
+          <option value="{{ esp.ip_address }}">{{ esp.ip_address }}</option>
+        {% endfor %}
+      </select>
+    </div>
+
+    {% for item in requests %}
+        {% with req=item.request %}
+            <div class="section">
+                <p><strong>Device Type:</strong> {{ req.device_type.name }}</p>
+                <p><strong>Quantity:</strong> {{ req.quantity }}</p>
+
+                {% for dev in item.devices %}
+                    <label>{{ dev.device_type.name }} {{ dev.index }}</label>
+                    <select name="{{ dev.request_id }}_{{ dev.index|add:"-1" }}-pin_number" required>
+                        <option value="">Select Pin</option>
+                        {% for pin in device_type_to_available_pins|get_item:dev.device_type.id %}
+                            <option value="{{ pin }}">{{ pin }}</option>
+                        {% endfor %}
+                    </select>
+                {% endfor %}
+            </div>
+        {% endwith %}
+    {% endfor %}
+
+    <div class="actions">
+        <button class="approve" type="submit">Approve All</button>
+        <a href="{% url 'reject_all_requests_by_user' user.id %}" class="reject">Reject All</a>
+    </div>
+</form>
+
+    </div>
+</div>
+{% endblock %}

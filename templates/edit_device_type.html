@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Edit Device Type | Voice and Web based Home Electronic Devices Switching System{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="{% static 'css/edit_device_type.css' %}">
+{% endblock %}
+
+{% block content %}
+  <div class="edit-device-type-container">
+    <h2>Edit Device Type: {{ device_type.name }}</h2>
+
+
+
+{% if form.errors %}
+  <div class="alert alert-danger" role="alert">
+    <ul class="mb-0">
+      {% for field in form %}
+        {% for error in field.errors %}
+          <li style="list-style-type: none;">{{ error }}</li>
+        {% endfor %}
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+        <li style="list-style-type: none;">{{ error }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+
+
+<form method="post">
+  {% csrf_token %}
+
+  <div class="form-group mb-3">
+    <label for="{{ form.name.id_for_label }}">Name</label>
+    {{ form.name }}
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="{{ form.icon.id_for_label }}">Icon</label>
+    {{ form.icon }}
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="{{ form.description.id_for_label }}">Description</label>
+    {{ form.description }}
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="{{ form.pin_range_start.id_for_label }}">Pin Range Start</label>
+    {{ form.pin_range_start }}
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="{{ form.pin_range_end.id_for_label }}">Pin Range End</label>
+    {{ form.pin_range_end }}
+  </div>
+
+
+  <button type="submit" class="btn btn-primary">Update</button>
+  <a href="{% url 'device_types' %}" class="btn btn-secondary">Cancel</a>
+
+
+</form>
+
+
+  </div>
+{% endblock %}

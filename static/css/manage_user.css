@@ -1,0 +1,148 @@
+.user-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 22px;
+}
+
+.add-user-btn {
+    margin-bottom: 0;
+    font-weight: 500;
+    padding: 8px 18px;
+    border-radius: 8px;
+    font-size: 1em;
+}
+
+.search-filter {
+    display: flex;
+    gap: 10px;
+}
+
+.search-filter input[type="text"] {
+    padding: 7px 13px;
+    border: 1.5px solid #bfc5d2;
+    border-radius: 6px;
+    background: #f5f7fa;
+    font-size: 1em;
+    transition: border 0.2s;
+}
+
+.search-filter input[type="text"]:focus {
+    border: 1.5px solid #3a3f51;
+    outline: none;
+    background: #fff;
+}
+
+.search-filter select {
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #bfc5d2;
+    font-size: 1em;
+}
+
+.table-container {
+    margin-top: 10px;
+    background: #f9fafc;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.01);
+}
+
+.table-container h2 {
+    margin: 0 0 10px 0;
+    font-size: 1.22rem;
+    color: #23305b;
+}
+
+.table {
+    background: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    margin-top: 0;
+    box-shadow: 0 1px 5px rgba(0,0,0,0.03);
+}
+
+.table th, .table td {
+    vertical-align: middle;
+    font-size: 1rem;
+}
+
+.table td .email {
+    font-size: 0.95em;
+    color: #7a7e88;
+}
+
+/* Status Buttons */
+.status-btn {
+    border: none;
+    border-radius: 14px;
+    padding: 5px 16px;
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 0.98em;
+    transition: background 0.18s;
+    margin-top: 1px;
+}
+
+.active-user {
+    background-color: #28b56a;
+}
+
+.inactive-user {
+    background-color: #e03a2a;
+}
+
+.status-btn:focus {
+    outline: 2px solid #31364a;
+}
+
+.btn-outline-danger {
+    border-radius: 8px;
+}
+
+.table .text-center {
+    color: #888;
+    font-style: italic;
+}
+
+/* Modal Styles */
+.modal-content {
+    border-radius: 12px;
+}
+
+.modal-header {
+    background: #f2f5fa;
+    border-bottom: 1px solid #eee;
+}
+
+.modal-title {
+    font-size: 1.18em;
+    font-weight: 600;
+}
+
+.modal-footer {
+    background: #f9f9fa;
+    border-top: 1px solid #ececec;
+}
+
+@media (max-width: 1000px) {
+    .user-header {
+        flex-direction: column;
+        gap: 12px;
+        align-items: stretch;
+    }
+}
+
+@media (max-width: 650px) {
+    .user-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+    .modal-content {
+        border-radius: 7px;
+    }
+    .modal-header, .modal-footer {
+        border-radius: 7px 7px 0 0;
+    }
+}

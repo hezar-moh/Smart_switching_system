@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support & Help | Voice and Web based Home Electronic Devices Switching System</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background: #f4f6fb;
+            margin: 0;
+            padding: 0;
+        }
+        .custom-header {
+            background: #1a237e;
+            color: #fff;
+            padding: 30px 0 15px 0;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(26,35,126,0.08);
+        }
+        .custom-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+        }
+        .custom-header nav {
+            margin-top: 10px;
+        }
+        .custom-header nav a {
+            color: #cfd8dc;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+            transition: color 0.2s;
+            font-size: 1.05rem;
+        }
+        .custom-header nav a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+        .support-section {
+            max-width: 600px;
+            margin: 40px auto 0 auto;
+            background: #fff;
+            border-radius: 14px;
+            box-shadow: 0 4px 24px rgba(26,35,126,0.07);
+            padding: 40px 30px 30px 30px;
+        }
+        .support-section h1 {
+            color: #1a237e;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        .support-faq {
+            margin-bottom: 30px;
+        }
+        .support-faq h4 {
+            color: #283593;
+            margin-bottom: 8px;
+            font-size: 1.15rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .support-faq p {
+            color: #4b5e8e;
+            margin: 0 0 10px 0;
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+        .support-section .contact-link {
+            display: inline-block;
+            margin-top: 20px;
+            color: #1a237e;
+            background: #e3eafc;
+            padding: 10px 22px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: background 0.2s, color 0.2s;
+        }
+        .support-section .contact-link:hover {
+            background: #1a237e;
+            color: #fff;
+        }
+        @media (max-width: 700px) {
+            .support-section {
+                padding: 25px 10px 20px 10px;
+            }
+            .custom-header h1 {
+                font-size: 1.3rem;
+            }
+        }
+        
+    footer {
+      background: #1a237e;
+      color: #fff;
+      padding: 1.25rem 0;
+      text-align: center;
+      font-size: 0.95rem;
+      margin-top: 2.5rem;
+    }
+
+    footer p {
+      margin: 0;
+    }
+
+    </style>
+</head>
+<body>
+<header class="custom-header">
+  <h1>Voice and Web based Home Electronic Devices Switching System</h1>
+  <nav>
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'about' %}">About</a>
+    <a href="{% url 'support' %}">Support</a>
+    <a href="{% url 'contact' %}">Contact</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'user_dashboard' %}">Dashboard</a>
+      <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'register' %}">Register</a>
+    {% endif %}
+  </nav>
+</header>
+
+<section class="support-section">
+    <h1>Support & Help</h1>
+
+    <div class="support-faq">
+      <h4>💡 How to connect your device?</h4>
+      <p>Ensure your ESP32 is connected to Wi-Fi and powered on. Login as an admin to assign relay pins to your account.</p>
+    </div>
+
+    <div class="support-faq">
+      <h4>🗣️ How to use voice control?</h4>
+      <p>Navigate to the user dashboard, click the microphone button, and speak your command like “Turn on Light 1”.</p>
+    </div>
+
+    <div class="support-faq">
+      <h4>📶 I'm not seeing my device online!</h4>
+      <p>Check your ESP32 power supply and Wi-Fi connection. Ensure the IP is correctly saved during admin approval.</p>
+    </div>
+
+    <div style="text-align:center;">
+      <a class="contact-link" href="{% url 'contact' %}">Still need help? Contact us</a>
+    </div>
+</section>
+
+
+
+
+  <footer>
+    <div class="container text-center">
+      <p>© {% now "Y" %} Voice and Web based Home Electronic Devices Switching System. All rights reserved.</p>
+    </div>
+  </footer>
+</body>
+</html>

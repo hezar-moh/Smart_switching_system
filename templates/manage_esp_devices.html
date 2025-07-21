@@ -1,0 +1,33 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}Manage ESP Devices{% endblock %}
+
+{% block content %}
+<h2>Manage ESP Devices</h2>
+
+<form method="post" class="mb-4">
+  {% csrf_token %}
+  <input type="text" name="ip_address" placeholder="Enter new ESP IP" required>
+  <button type="submit" class="btn btn-primary">Add ESP IP</button>
+</form>
+
+<table class="table">
+  <thead>
+    <tr><th>ID</th><th>ESP IP</th><th>Actions</th></tr>
+  </thead>
+  <tbody>
+    {% for device in devices %}
+    <tr>
+      <td>{{ device.id }}</td>
+      <td>{{ device.ip_address }}</td>
+      <td>
+        <a href="{% url 'edit_esp_device' device.id %}" class="btn btn-sm btn-warning">Edit</a>
+        <a href="{% url 'delete_esp_device' device.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this ESP IP?');">Delete</a>
+      </td>
+    </tr>
+    {% empty %}
+    <tr><td colspan="3">No ESP devices registered yet.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}

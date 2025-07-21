@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+<style>
+:root {
+    --primary-color: #007bff;
+    --primary-hover: #0056b3;
+    --success-green: #28a745;
+    --danger-red: #dc3545;
+    --warning-yellow: #ffca28;
+    --card-background: #fff;
+    --input-background: #f9fafc;
+    --hover-background: #e8f1fd;
+    --border-light: #e0e4e8;
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --border-radius: 8px;
+    --transition: 0.2s;
+    --font-primary: 'Segoe UI', Roboto, Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-primary);
+    background: #f4f6fb;
+    color: #1a237e;
+    line-height: 1.5;
+}
+
+.custom-header {
+    background: #1a237e;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+}
+
+.custom-header h1 {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.custom-header nav a {
+    color: #fff;
+    text-decoration: none;
+    margin: 0 12px;
+    font-weight: 500;
+    transition: color var(--transition);
+}
+
+.custom-header nav a:hover {
+    color: var(--warning-yellow);
+}
+
+.container {
+    display: flex;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 15px;
+    gap: 20px;
+}
+
+.sidebar {
+    position: sticky;
+    top: 20px;
+    width: 240px;
+    background: #f7faff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--transition);
+}
+
+.sidebar:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.sidebar h2 {
+    font-size: 1.3rem;
+    color: #1a237e;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #1a237e;
+    text-decoration: none;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: var(--border-radius);
+    transition: background var(--transition), color var(--transition);
+}
+
+.sidebar a:hover {
+    background: var(--hover-background);
+    color: var(--primary-color);
+}
+
+.sidebar a.active {
+    background: var(--primary-color);
+    color: #fff;
+    font-weight: 600;
+}
+
+.main-content {
+    flex-grow: 1;
+    background: var(--card-background);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--transition);
+}
+
+.main-content:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.main-content h3 {
+    font-size: 1.5rem;
+    color: #1a237e;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.add-device-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    padding: 20px;
+    border: 1px solid var(--border-light);
+    border-radius: var(--border-radius);
+    background: var(--input-background);
+    margin-bottom: 20px;
+}
+
+.add-device-form label {
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 500;
+    min-width: 100px;
+}
+
+.add-device-form input,
+.add-device-form select {
+    padding: 10px;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+    font-size: 0.9rem;
+    min-width: 180px;
+    transition: border-color var(--transition);
+}
+
+.add-device-form input:focus,
+.add-device-form select:focus {
+    border-color: var(--primary-color);
+    outline: none;
+}
+
+.add-device-form button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 6px;
+    background: var(--primary-color);
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background var(--transition);
+}
+
+.add-device-form button:hover {
+    background: var(--primary-hover);
+}
+
+.devices-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    font-size: 0.9rem;
+}
+
+.devices-table th,
+.devices-table td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-light);
+}
+
+.devices-table th {
+    background: var(--input-background);
+    color: #1a237e;
+    font-weight: 600;
+}
+
+.status-on {
+    background: #e9f7ef;
+    color: var(--success-green);
+    padding: 4px 12px;
+    border-radius: var(--border-radius);
+    font-size: 0.85rem;
+    display: inline-block;
+}
+
+.status-off {
+    background: #fee2e2;
+    color: var(--danger-red);
+    padding: 4px 12px;
+    border-radius: var(--border-radius);
+    font-size: 0.85rem;
+    display: inline-block;
+}
+
+.actions a {
+    color: var(--primary-color);
+    text-decoration: none;
+    margin-right: 12px;
+    transition: color var(--transition);
+}
+
+.actions a:hover {
+    color: var(--primary-hover);
+}
+
+.disabled-action {
+    color: #888;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.footer {
+    background: #1a237e;
+    color: #fff;
+    padding: 20px 10px;
+    text-align: center;
+    font-size: 0.95rem;
+    margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .sidebar {
+        position: static;
+        width: 100%;
+        border-radius: var(--border-radius);
+        padding: 15px;
+    }
+
+    .main-content {
+        padding: 15px;
+    }
+
+    .add-device-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .add-device-form label {
+        margin-bottom: 5px;
+    }
+
+    .add-device-form input,
+    .add-device-form select {
+        min-width: 100%;
+    }
+
+    .main-content h3 {
+        font-size: 1.3rem;
+    }
+}
+</style>
+</head>
+<body>
+<header class="custom-header">
+  <h1>Smart Switching System</h1>
+  <nav>
+    <a href="{% url 'home' %}">Home</a>
+
+    {% if user.is_authenticated %}
+      <a href="{% url 'user_dashboard' %}">Dashboard</a>
+      <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'register' %}">Register</a>
+    {% endif %}
+  </nav>
+</header>
+
+  <div class="container">
+    <div class="sidebar">
+      <h2>Smart Control</h2>
+      <a href="{% url 'user_dashboard' %}" class="{% if request.resolver_match.url_name == 'user_dashboard' %}active{% endif %}">Dashboard</a>
+      <a href="{% url 'manage_devices' %}" class="{% if request.resolver_match.url_name == 'manage_devices' %}active{% endif %}">Manage Devices</a>
+      <a href="{% url 'device_logs' %}" class="{% if request.resolver_match.url_name == 'device_logs' %}active{% endif %}">Logs</a>
+      <a href="{% url 'logout' %}" class="{% if request.resolver_match.url_name == 'logout' %}active{% endif %}">Logout</a>
+
+      
+    </div>
+
+  <div class="main-content">
+    <h3>Request New Device</h3>
+    <form method="POST" class="add-device-form">
+      {% csrf_token %}
+  
+      <label for="device_type">Device Type</label>
+      <select name="device_type" id="device_type" required>
+        {% for dt in device_types %}
+          <option value="{{ dt.id }}">{{ dt.name }}</option>
+        {% endfor %}
+      </select>
+
+      <label for="quantity">Quantity</label>
+      <input type="number" name="quantity" id="quantity" min="1" value="1" required>
+
+      <button type="submit" class="btn-add">Request Device</button>
+    </form>
+
+    <h3>My Devices</h3>
+    <table class="devices-table">
+      <thead>
+        <tr>
+          <th>Device Name</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for device in devices %}
+<tr>
+  <td>{{ device.name|default:"--" }}</td>
+  <td>{{ device.device_type.name }}</td>
+<td>
+  {% if device.is_on %}
+    <span class="status-on">ON</span>
+  {% else %}
+    <span class="status-off">OFF</span>
+  {% endif %}
+</td>
+
+  
+<td class="actions">
+  {% if device.is_approved %}
+    <a href="{% url 'edit_device_name' device.id %}">✏️ Rename</a>
+    <span class="disabled-action" title="Approved devices cannot be deleted">🗑️</span>
+  {% else %}
+    <span class="disabled-action" title="Cannot rename until approved">✏️</span>
+    <a href="{% url 'delete_device' device.id %}">🗑️</a>
+  {% endif %}
+</td>
+
+</tr>
+{% endfor %}
+
+{% for req in device_requests %}
+  {% for i in " "|center:req.quantity %}
+  <tr>
+    <td>{{ req.device_type.name|lower }}{{ forloop.counter }}</td>  <!-- e.g. p1, p2 -->
+    <td>{{ req.device_type.name }}</td>
+    <td><span class="status-off">Pending</span></td>
+    <td class="actions">
+      <a href="{% url 'delete_request' req.id %}">🗑️ Cancel</a>
+    </td>
+  </tr>
+  {% endfor %}
+{% endfor %}
+
+
+
+        {% if not devices and not device_requests %}
+        <tr><td colspan="4">No devices or requests yet.</td></tr>
+        {% endif %}
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<footer class="footer">
+  &copy; {% now "Y" %} Smart Switching System. All rights reserved.
+</footer>
+
+</body>
+</html>

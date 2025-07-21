@@ -1,0 +1,212 @@
+{% comment %} {% extends 'base.html' %} {% endcomment %}
+{% load static %}
+
+{% comment %} {% block title %}Home | Smart Switching System{% endblock %} {% endcomment %}
+
+{% block content %}
+<style>
+/* HEADER */
+.custom-header {
+background: #1a237e;
+color: #fff;
+padding: 30px 0 15px 0;
+text-align: center;
+box-shadow: 0 2px 8px rgba(26,35,126,0.08);
+        }
+        .custom-header h1 {
+            margin: 0 0 10px 0;
+            font-size: 2.2rem;
+            letter-spacing: 1px;
+        }
+        .custom-header nav {
+            margin-top: 10px;
+        }
+        .custom-header nav a {
+            color: #cfd8dc;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+            transition: color 0.2s;
+            font-size: 1.05rem;
+        }
+        .custom-header nav a:hover {
+            color: #fff;
+            text-decoration: underline;
+        }
+
+/* GENERAL STYLES */
+body {
+  font-family: 'Roboto', Arial, sans-serif;
+  background: #f4f6fb;
+  margin: 0;
+  padding: 0;
+}
+
+/* HERO SECTION */
+.hero-section {
+  background: #f0f4ff;
+  padding: 80px 20px;
+  text-align: center;
+}
+
+.hero-section h1 {
+  font-size: 2.5rem;
+  color: #1a237e;
+}
+
+.lead-text {
+  font-size: 1.2rem;
+  color: #4b5e8e;
+  margin-top: 10px;
+}
+
+.primary-btn {
+  display: inline-block;
+  margin-top: 20px;
+  background: #007bff;
+  color: white;
+  padding: 12px 24px;
+  text-decoration: none;
+  border-radius: 6px;
+  transition: background 0.2s ease;
+}
+
+.primary-btn:hover {
+  background: #0056b3;
+}
+
+/* SECTION TITLES */
+.section-title {
+  font-size: 1.8rem;
+  margin-bottom: 24px;
+  color: #1a237e;
+}
+
+/* FEATURES */
+.features-section {
+  padding: 60px 20px;
+  background: #ffffff;
+}
+
+.features-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+}
+
+.feature-card {
+  background: #f5f7fa;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 300px;
+  flex: 1 1 250px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+  text-align: center;
+}
+
+.feature-card h4 {
+  color: #1a237e;
+  margin-bottom: 10px;
+}
+
+/* ABOUT & SUPPORT */
+.about-section,
+.support-section {
+  padding: 60px 20px;
+  background: #f9f9f9;
+}
+
+.about-section p,
+.support-section p {
+  max-width: 700px;
+  margin: 0 auto;
+  color: #4b5e8e;
+  font-size: 1rem;
+}
+
+.support-section a {
+  color: #007bff;
+  text-decoration: underline;
+}
+
+.support-section a:hover {
+  color: #0056b3;
+}
+
+/* FOOTER */
+.footer {
+  background: #1a237e;
+  color: #ffffff;
+  padding: 20px 10px;
+  text-align: center;
+  font-size: 0.95rem;
+  margin-top: 60px;
+}
+
+.footer a {
+  color: #ffca28;
+  text-decoration: none;
+  margin: 0 8px;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+</style>
+
+<!-- HEADER -->
+<header class="custom-header">
+  <h1>Voice and Web based Home Electronic Devices Switching System</h1>
+  <nav>
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'about' %}">About</a>
+    <a href="{% url 'support' %}">Support</a>
+    <a href="{% url 'contact' %}">Contact</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'user_dashboard' %}">Dashboard</a>
+      <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'register' %}">Register</a>
+    {% endif %}
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero-section">
+  <div class="container text-center">
+    <h1>Voice and Web based Home Electronic Devices Switching System</h1>
+    <p class="lead-text">Control your home devices via Web & Voice — anytime, anywhere.</p>
+    <a href="{% url 'login' %}" class="primary-btn">Get Started</a>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features-section">
+  <div class="container">
+    <h2 class="section-title text-center">System Features</h2>
+    <div class="features-grid">
+      <div class="feature-card">
+        <h4>Web-Based Control</h4>
+        <p>Manage all your devices from an intuitive web dashboard.</p>
+      </div>
+      <div class="feature-card">
+        <h4>Voice Commands</h4>
+        <p>Turn on/off lights and fans using simple voice commands.</p>
+      </div>
+      <div class="feature-card">
+        <h4>Real-Time Logs</h4>
+        <p>Track when devices were turned on and off with detailed logs.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- FOOTER -->
+<footer class="footer">
+  &copy; {% now "Y" %} Voice and Web based Home Electronic Devices Switching System. All rights reserved.
+</footer>
+
+{% endblock %}

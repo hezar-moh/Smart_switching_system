@@ -1,0 +1,25 @@
+{% extends 'base_dashboard.html' %}
+{% load static %}
+
+{% block title %}Device Requests | Admin Panel{% endblock %}
+
+{% block content %}
+<div class="main-content">
+    <h1>Device Requests</h1>
+
+    {% if requests %}
+        {% for user in requests %}
+            <div class="request-card">
+                <div class="user-info">
+                    <p><strong>User:</strong> {{ user.username }}</p>
+                    <p><strong>Email:</strong> {{ user.email }}</p>
+                    <p><strong>Phone:</strong> {{ user.userprofile.phone_number }}</p>
+                    <p><a href="{% url 'admin_device_request_detail' user.id %}">View Requests</a></p>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>No pending device requests.</p>
+    {% endif %}
+</div>
+{% endblock %}

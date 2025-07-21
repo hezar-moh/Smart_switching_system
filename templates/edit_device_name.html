@@ -1,0 +1,198 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    background: #f5f7fa;
+    color: #1a237e;
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .container-main {
+    display: flex;
+    max-width: 1200px;
+    margin: 24px auto;
+    padding: 0 16px;
+    gap: 20px;
+  }
+
+  .sidebar {
+    position: sticky;
+    top: 24px;
+    width: 240px;
+    min-width: 190px;
+    max-height: calc(100vh - 48px);
+    background: linear-gradient(135deg, #ffffff 0%, #f0f4ff 100%);
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.2s ease;
+  }
+
+  .sidebar:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  .sidebar h2 {
+    font-size: 1.4rem;
+    color: #1a237e;
+    margin: 0 0 20px;
+    font-weight: 600;
+  }
+
+  .sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #1a237e;
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 10px 12px;
+    margin: 8px 0;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+  }
+
+  .sidebar a:hover,
+  .sidebar a:focus {
+    background: #e8f1fd;
+    color: #007bff;
+    transform: translateX(4px);
+  }
+
+  .sidebar a:hover::before,
+  .sidebar a:focus::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #007bff;
+    opacity: 1;
+  }
+
+  .sidebar a[aria-current="page"] {
+    background: #007bff;
+    color: #fff;
+    font-weight: 600;
+    box-shadow: 0 2px 10px rgba(0, 123, 255, 0.2);
+  }
+
+  .sidebar a[aria-current="page"]::before {
+    content: '';
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #fff;
+    opacity: 1;
+  }
+
+  .main-content {
+    flex-grow: 1;
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.2s ease;
+  }
+
+  .main-content:hover {
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+  }
+
+  .main-content h2 {
+    font-size: 1.8rem;
+    color: #1a237e;
+    margin: 0 0 16px;
+    font-weight: 600;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    padding: 20px;
+    border: 1px solid #e0e4e8;
+    border-radius: 8px;
+    background: #f9fafc;
+  }
+
+  label {
+    font-size: 0.9rem;
+    color: #333;
+    font-weight: 500;
+  }
+
+  input {
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    transition: border-color 0.2s ease;
+  }
+
+  input:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.2);
+  }
+
+  button {
+    padding: 10px 24px;
+    border: none;
+    border-radius: 6px;
+    background: #007bff;
+    color: #fff;
+    font-size: 0.9rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s ease;
+  }
+
+  button:hover {
+    background: #0056b3;
+  }
+
+  @media (max-width: 768px) {
+    .container-main {
+      flex-direction: column;
+      margin: 16px;
+      padding: 16px;
+    }
+    .sidebar {
+      position: static;
+      width: 100%;
+      max-height: none;
+      margin-bottom: 20px;
+    }
+    .main-content {
+      padding: 16px;
+    }
+    form {
+      padding: 16px;
+    }
+  }
+</style>
+
+<div class="container-main">
+  <div class="sidebar">
+    <h2>Smart Control</h2>
+    <a href="{% url 'user_dashboard' %}">Dashboard</a>
+    <a href="{% url 'manage_devices' %}" aria-current="page">Manage Devices</a>
+    <a href="{% url 'device_logs' %}">Logs</a>
+    <a href="{% url 'logout' %}">Logout</a>
+  </div>
+
+  <div class="main-content">
+    <h2>Rename Device</h2>
+    <form method="POST">
+      {% csrf_token %}
+      <label for="name">Device Name</label>
+      <input type="text" name="name" id="name" value="{{ device.name }}" required>
+      <button type="submit">Save</button>
+    </form>
+  </div>
+</div>
+{% endblock %}

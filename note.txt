@@ -1,0 +1,110 @@
+///activate// --   env\Scripts\activate  --
+// runserver// --  python manage.py runserver --
+
+//////////system admin & project admin////////////
+username: hezar
+pasword: 123
+
+//////////
+
+//////users///////
+email = kabeho@gmail.com  pasword=123
+
+
+////// web and voice based, home electronic devices switching system/////////
+
+
+
+
+
+
+
+
+
+//////////ARDUINO CODE///////////
+
+#include <WiFi.h>
+#include <WebServer.h>
+
+// ==== Wi-Fi Credentials ====
+const char* ssid = "Hemed";         
+const char* password = "AndikaNakutajia"; 
+
+// ==== Relay Pins (Active LOW) ====
+const int relayPins[] = {5, 15, 18, 19};     // FAN1, FAN2, BULB1, BULB2
+const int numRelays = sizeof(relayPins) / sizeof(relayPins[0]);
+
+// ==== Web Server ====
+WebServer server(80);
+
+// ==== Setup ====
+void setup() {
+  Serial.begin(115200);
+  delay(2000);  // Give time for Serial Monitor to open
+  Serial.println("Starting ESP32...");
+
+  // ** Remove static IP config to use DHCP **
+  // Connect to Wi-Fi
+  WiFi.begin(ssid, password);
+  Serial.print("Connecting to Wi-Fi");
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.print(".");
+  }
+
+  Serial.println("\n Connected to Wi-Fi!");
+  Serial.print("ESP32 IP Address: ");
+  Serial.println(WiFi.localIP());  // This will print the assigned DHCP IP
+
+  // Set relay pins to OUTPUT and OFF
+  for (int i = 0; i < numRelays; i++) {
+    pinMode(relayPins[i], OUTPUT);
+    digitalWrite(relayPins[i], HIGH); // OFF initially (active LOW)
+  }
+
+  // Route for controlling devices
+  server.on("/control", handleControlRequest);
+  server.begin();
+  Serial.println(" Web server started.");
+}
+
+// ==== Handler ====
+void handleControlRequest() {
+  if (!server.hasArg("pin") || !server.hasArg("state")) {
+    server.send(400, "text/plain", "Missing 'pin' or 'state' parameter.");
+    return;
+  }
+
+  int pin = server.arg("pin").toInt();
+  String state = server.arg("state");
+
+  // Check if pin is valid
+  bool validPin = false;
+  for (int i = 0; i < numRelays; i++) {
+    if (relayPins[i] == pin) {
+      validPin = true;
+      break;
+    }
+  }
+
+  if (!validPin) {
+    server.send(400, "text/plain", "Invalid pin.");
+    return;
+  }
+
+  // Control logic (Active LOW)
+  if (state == "on") {
+    digitalWrite(pin, LOW);  // Turn ON
+    server.send(200, "text/plain", "Pin " + String(pin) + " turned ON");
+  } else if (state == "off") {
+    digitalWrite(pin, HIGH); // Turn OFF
+    server.send(200, "text/plain", "Pin " + String(pin) + " turned OFF");
+  } else {
+    server.send(400, "text/plain", "Invalid state. Use 'on' or 'off'.");
+  }
+}
+
+// ==== Loop ====
+void loop() {
+  server.handleClient();
+}

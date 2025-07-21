@@ -1,0 +1,52 @@
+
+{% extends "base_dashboard.html" %}
+{% load static %}
+{% block title %}Admin Dashboard | Smart Switching{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/admin_dashboard.css' %}">
+{% endblock %}
+
+{% block content %}
+  <h1>Admin Dashboard</h1>
+  <p>Welcome back, Admin. Here's your system overview:</p>
+
+  <div class="dashboard-grid">
+    <div class="card card-users">
+      <h2>👥 Users</h2>
+      <p>Total: {{ total_users }}</p>
+      <p>Active: {{ active_users }}</p>
+      <a href="{% url 'manage_users' %}">View all users</a>
+    </div>
+
+    <div class="card card-devices">
+      <h2>💡 Devices</h2>
+      <p>Total: {{ total_devices }}</p>
+      <p>Online: {{ online_devices }}</p>
+      <a href="{% url 'device_types' %}">Manage device types</a>
+    </div>
+  </div>
+
+  <div class="table-container">
+    <h2>Recent User Activity</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>User</th>
+          <th>Devices</th>
+          <th>Last Active</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for user in recent_users %}
+<tr>
+  <td>{{ user.device__owner__username }}<br>{{ user.device__owner__email }}</td>
+  <td>{{ user.device_count }}</td>
+  <td>{{ user.last_active|date:"Y-m-d H:i:s" }}</td>
+</tr>
+{% endfor %}
+
+      </tbody>
+    </table>
+  </div>
+{% endblock %}

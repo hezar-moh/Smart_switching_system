@@ -1,0 +1,106 @@
+{% extends "base_dashboard.html" %}
+{% load static %}
+
+{% block title %}Device Type Management | Smart Control{% endblock %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/manage_devices.css' %}">
+
+{% endblock %}
+
+{% block content %}
+  <h1>Device Type Management</h1>
+  <button class="add-device-btn" onclick="document.getElementById('modal').style.display='block'">+ Add Device Type</button>
+
+  <div id="modal" class="modal{% if form.errors %} show{% endif %}">
+    <div class="modal-content">
+      <span class="close" onclick="document.getElementById('modal').style.display='none'">&times;</span>
+      <h2>Add Device Type</h2>
+
+{% if form.errors %}
+  <div class="alert alert-danger" role="alert">
+    <ul class="mb-0">
+      {% for field in form %}
+        {% for error in field.errors %}
+          <li style="list-style-type: none;">{{ error }}</li>
+        {% endfor %}
+      {% endfor %}
+      {% for error in form.non_field_errors %}
+        <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+{% endif %}
+
+<form method="post">
+  {% csrf_token %}
+
+  <div class="form-group mb-3">
+    <label for="{{ form.name.id_for_label }}">Name</label>
+    {{ form.name }}
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="{{ form.icon.id_for_label }}">Icon</label>
+    {{ form.icon }}
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="{{ form.description.id_for_label }}">Description</label>
+    {{ form.description }}
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="{{ form.pin_range_start.id_for_label }}">Pin Range Start</label>
+    {{ form.pin_range_start }}
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="{{ form.pin_range_end.id_for_label }}">Pin Range End</label>
+    {{ form.pin_range_end }}
+  </div>
+
+  <button type="submit" class="btn btn-primary">add</button>
+  <a href="{% url 'device_types' %}" class="btn btn-secondary">Cancel</a>
+
+
+
+</form>
+
+    </div>
+  </div>
+
+  {% if device_types %}
+  <div class="device-grid">
+    {% for device in device_types %}
+<div class="device-card">
+  <div style="font-size: 2.2rem;">{{ device.icon }}</div>
+  <h3>{{ device.name }}</h3>
+  <p>{{ device.description }}</p>
+  <p><strong>Pin Range:</strong> {{ device.pin_range_start }} - {{ device.pin_range_end }}</p>
+  <div style="margin: 15px 0 5px 0;">
+    <span style="display: inline-block; background: #e8f1fd; color: #007bff; font-weight: 600; border-radius: 8px; padding: 6px 16px; font-size: 1.07rem;">
+      {{ device.device_set.count }} device{{ device.device_set.count|pluralize }} using this type
+    </span>
+  </div>
+  <a href="{% url 'edit_device_type' device.id %}">✏️ Edit</a>
+  <a href="{% url 'delete_device_type' device.id %}">🗑️ Delete</a>
+</div>
+
+    {% endfor %}
+  </div>
+  {% else %}
+  <p>No device types added yet.</p>
+  {% endif %}
+{% endblock %}
+
+{% block extra_js %}
+<script>
+  window.onclick = function(event) {
+    const modal = document.getElementById('modal');
+    if (event.target == modal) {
+      modal.style.display = "none";
+    }
+  }
+</script>
+{% endblock %}

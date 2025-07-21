@@ -1,0 +1,13 @@
+{% extends 'base_dashboard.html' %}
+{% block title %}Edit ESP Device{% endblock %}
+
+{% block content %}
+<h2>Edit ESP Device</h2>
+
+<form method="post">
+  {% csrf_token %}
+  <label>New IP address for <strong>{{ esp.ip_address }}</strong>:</label>
+  <input type="text" name="new_ip" class="form-control" required placeholder="Enter new IP address">
+  <button type="submit" class="btn btn-primary mt-2">Update</button>
+</form>
+{% endblock %}

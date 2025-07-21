@@ -1,0 +1,52 @@
+Yes, ✅ **you can have more than one admin** in Django.
+
+### 🔑 What makes a user an admin?
+
+A user is considered an "admin" if they have:
+
+* `is_superuser = True` → full permissions
+* `is_staff = True` → access to Django admin panel (`/admin`)
+
+You can set these for **multiple users**, so multiple admins can exist.
+
+---
+
+### 🧱 How to create multiple admins:
+
+#### Option 1: Create multiple superusers
+
+```bash
+python manage.py createsuperuser
+```
+
+Run it as many times as needed to create different admin accounts.
+
+#### Option 2: Promote existing users
+
+In the Django shell:
+
+```bash
+from django.contrib.auth.models import User
+
+user = User.objects.get(username='example1')
+user.is_superuser = True
+user.is_staff = True
+user.save()
+```
+
+Repeat this for any other users you want to promote.
+
+---
+
+### 🧠 Things to Keep in Mind
+
+* All superusers have **full control** — including the ability to delete users, change devices, view logs, etc.
+* Use this power carefully — especially in production.
+
+Let me know if you'd like to add a feature where only superusers can **add or promote other admins** via the UI.
+
+
+
+yes can we have ability to make other admin but cant do somethings???
+
+yes can we have ability to make other admin but cant do somethings?

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+  {% if messages %}
+    <ul class="messages">
+      {% for message in messages %}
+        <li class="{{ message.tags }}">{{ message }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+
+  <h2>Approve Requests for {{ user.username }}</h2>
+  <form method="post">
+    {% csrf_token %}
+    {% for req, forms in formsets.items %}
+      <h4>{{ req.device_type.name }} - {{ forms|length }} device(s)</h4>
+      {% for form in forms %}
+        <div>{{ form.as_p }}</div>
+      {% endfor %}
+      <hr>
+    {% endfor %}
+    <button type="submit" class="btn btn-primary">Approve All</button>
+  </form>
+</body>
+
+</html>

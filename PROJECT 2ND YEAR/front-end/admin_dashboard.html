@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            color: #333;
+            min-height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #fff;
+            padding: 20px 15px;
+            border-right: 1px solid #e9ecef;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+        }
+        .sidebar .nav-link {
+            color: #6c757d;
+            padding: 8px 15px;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            font-size: 0.95rem;
+        }
+        .sidebar .nav-link.active {
+            background-color: #e9ecef;
+            color: #007bff;
+            font-weight: 500;
+        }
+        .sidebar .nav-link i {
+            margin-right: 10px;
+        }
+        .main-content {
+            margin-left: 250px;
+            padding: 30px 40px;
+        }
+        .header {
+            margin-bottom: 30px;
+        }
+        .card-section {
+            background-color: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: box-shadow 0.2s;
+        }
+        .card-section:hover {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .card-section i {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        .card-section h5 {
+            color: #6c757d;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .card-section h3 {
+            font-size: 1.5rem;
+            margin: 10px 0;
+            color: #333;
+        }
+        .card-section .progress {
+            height: 6px;
+            border-radius: 3px;
+            margin: 10px 0;
+        }
+        .card-section .progress-bar {
+            border-radius: 3px;
+        }
+        .card-section .small {
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
+        .card-section .btn-link {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 0.85rem;
+        }
+        .card-section .btn-link:hover {
+            text-decoration: underline;
+        }
+        .recent-activity {
+            background-color: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+        .recent-activity table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 10px;
+        }
+        .recent-activity th {
+            color: #6c757d;
+            font-weight: 500;
+            font-size: 0.9rem;
+            padding-bottom: 10px;
+        }
+        .recent-activity td {
+            background-color: #f8f9fa;
+            padding: 10px 15px;
+            border-radius: 5px;
+        }
+        .recent-activity .user-icon {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+            vertical-align: middle;
+        }
+        footer {
+            text-align: center;
+            font-size: 0.85rem;
+            color: #6c757d;
+            margin-top: 40px;
+        }
+
+        /* Responsive layout */
+        @media (max-width: 768px) {
+            .sidebar {
+                position: relative;
+                width: 100%;
+                height: auto;
+                border-right: none;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="d-flex flex-column flex-md-row">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h4 class="text-center mb-4"><i class="bi bi-house-fill"></i> Smart Control</h4>
+            <nav class="nav flex-column">
+                <a class="nav-link active" href="{% url 'admin_dashboard' %}"><i class="bi bi-grid"></i> Dashboard</a>
+                <a class="nav-link" href="{% url 'manage_users' %}"><i class="bi bi-people"></i> Manage Users</a>
+                <a class="nav-link" href="{% url 'manage_device_types' %}"><i class="bi bi-lightbulb"></i> Device Types</a>
+                <a class="nav-link" href="#" onclick="confirmLogout()"><i class="bi bi-box-arrow-left"></i> Logout</a>
+            </nav>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <div class="header">
+                <h2>Admin Dashboard</h2>
+                <p class="text-muted">System overview and management</p>
+            </div>
+
+            <div class="row g-3">
+                <div class="col-md-4">
+                    <div class="card-section">
+                        <i class="bi bi-people" style="color: #6c757d;"></i>
+                        <h5>Total Users</h5>
+                        <h3>{{ total_user }}</h3>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" style="width: 75%;" role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <small>Active Users 18</small><br>
+                        <a href="{% url 'manage_users' %}" class="btn-link">View all users</a>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="card-section">
+                        <i class="bi bi-lightbulb" style="color: #ffc107;"></i>
+                        <h5>Total Devices</h5>
+                        <h3>{{ total_devices }}</h3>
+                        <div class="progress">
+                            <div class="progress-bar bg-success" style="width: 83%;" role="progressbar" aria-valuenow="83" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <small>Online Devices 72</small><br>
+                        <a href="{% url 'manage_device_types' %}" class="btn-link">Manage device types</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row g-3 mt-4">
+                <div class="col-md-6">
+                    <div class="recent-activity">
+                        <h5>Recent User Activity <a href="#" class="btn-link float-end">View all</a></h5>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Devices</th>
+                                    <th>Last Active</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if recent_activities %}
+                                    {% for activity in recent_activities %}
+                                    <tr>
+                                        <td>
+                                            <img src="{{ activity.user_icon }}" alt="User Icon" class="user-icon">
+                                            {{ activity.username }}<br>
+                                            <small>{{ activity.email }}</small>
+                                        </td>
+                                        <td>{{ activity.device_count }}</td>
+                                        <td>{{ activity.last_active }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                {% else %}
+                                    <tr>
+                                        <td colspan="3" class="text-center text-muted">No recent activity found.</td>
+                                    </tr>
+                                {% endif %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer -->
+            <footer>
+                &copy; 2025 MASS STORE TZ | Smart Switching Control System
+            </footer>
+        </div>
+    </div>
+
+    <!-- JS Scripts -->
+    <script>
+        function confirmLogout() {
+            if (confirm("Are you sure you want to log out?")) {
+                document.body.style.cursor = "wait";
+                window.location.href = "{% url 'logout' %}";
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

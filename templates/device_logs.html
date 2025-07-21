@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Device Activity Logs | Voice and Web based Home Electronic Devices Switching System</title>
+<style>
+:root {
+    --primary-color: #007bff;
+    --success-green: #28a745;
+    --danger-red: #dc3545;
+    --card-background: #fff;
+    --input-background: #f7fafd;
+    --hover-background: #e8f1fd;
+    --border-light: #e3e9f7;
+    --shadow-sm: 0 2px 5px rgba(0, 0, 0, 0.05);
+    --border-radius: 8px;
+    --transition: 0.2s;
+    --font-primary: 'Segoe UI', Arial, sans-serif;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-primary);
+    background: #f4f6fb;
+    color: #46536a;
+    line-height: 1.6;
+}
+
+.custom-header {
+    background: #1a237e;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    
+}
+
+.custom-header h1 {
+    margin: 0 0 10px;
+    font-size: 2.2rem;
+}
+
+.custom-header nav a {
+    color: #cfd8dc;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: 500;
+    font-size: 1.05rem;
+    transition: color var(--transition);
+}
+
+.custom-header nav a:hover {
+    color: #fff;
+    text-decoration: underline;
+}
+
+.container {
+    display: flex;
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 0 10px;
+    gap: 20px;
+}
+
+.sidebar {
+    position: sticky;
+    top: 20px;
+    width: 240px;
+    background: #f7faff;
+    padding: 20px;
+    border-radius: 0 12px 12px 0;
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--transition);
+}
+
+.sidebar:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.sidebar h2 {
+    color: #1a237e;
+    font-size: 1.3rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+.sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #1a237e;
+    text-decoration: none;
+    margin: 8px 0;
+    padding: 10px;
+    border-radius: var(--border-radius);
+    transition: background var(--transition), color var(--transition);
+}
+
+.sidebar a:hover {
+    background: var(--hover-background);
+    color: var(--primary-color);
+}
+
+.sidebar a.active {
+    background: var(--primary-color);
+    color: #fff;
+    font-weight: 600;
+}
+
+.main-content {
+    flex-grow: 1;
+    background: var(--card-background);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+    transition: box-shadow var(--transition);
+}
+
+.main-content:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+}
+
+.main-content h1 {
+    font-size: 1.5rem;
+    color: #1a237e;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+    background: var(--card-background);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-sm);
+}
+
+th, td {
+    padding: 12px;
+    text-align: left;
+    font-size: 0.95rem;
+    color: #46536a;
+    border-bottom: 1px solid var(--border-light);
+}
+
+th {
+    background: var(--input-background);
+    color: #29426d;
+    font-weight: 600;
+}
+
+tbody tr:hover {
+    background: var(--hover-background);
+}
+
+.status-on {
+    background: #e9f7ef;
+    color: var(--success-green);
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.status-off {
+    background: #fff5f5;
+    color: var(--danger-red);
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+}
+
+.no-data {
+    text-align: center;
+    padding: 20px;
+    font-size: 1rem;
+}
+
+.footer {
+    background: #1a237e;
+    color: #fff;
+    padding: 20px 10px;
+    text-align: center;
+    font-size: 0.95rem;
+    margin-top: 40px;
+}
+
+.footer a {
+    color: #ffca28;
+    text-decoration: none;
+    margin: 0 8px;
+}
+
+.footer a:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .sidebar {
+        position: static;
+        width: 100%;
+        border-radius: var(--border-radius);
+        padding: 15px;
+        ``
+    }
+
+    .main-content {
+        padding: 15px;
+    }
+
+    table {
+        font-size: 0.9rem;
+    }
+
+    th, td {
+        padding: 10px;
+    }
+
+    .main-content h1 {
+        font-size: 1.3rem;
+    }
+
+    .sidebar a {
+        font-size: 1rem;
+    }
+}
+</style>
+</head>
+<body>
+<header class="custom-header">
+  <h1>Smart Switching System</h1>
+  <nav>
+    <a href="{% url 'home' %}">Home</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'user_dashboard' %}">Dashboard</a>
+      <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'register' %}">Register</a>
+    {% endif %}
+  </nav>
+</header>
+
+
+  <div class="container">
+    <div class="sidebar">
+      <h2>Smart Control</h2>
+      <a href="{% url 'user_dashboard' %}" class="{% if request.resolver_match.url_name == 'user_dashboard' %}active{% endif %}">Dashboard</a>
+      <a href="{% url 'manage_devices' %}" class="{% if request.resolver_match.url_name == 'manage_devices' %}active{% endif %}">Manage Devices</a>
+      <a href="{% url 'device_logs' %}" class="{% if request.resolver_match.url_name == 'device_logs' %}active{% endif %}">Logs</a>
+      <a href="{% url 'logout' %}" class="{% if request.resolver_match.url_name == 'logout' %}active{% endif %}">Logout</a>  
+    </div>
+    <div class="main-content">
+      <h1>Device Usage Logs</h1>
+      <table>
+        <thead>
+          <tr>
+            <th>Device</th>
+            <th>Status</th>
+            <th>Time On</th>
+            <th>Time Off</th>
+            <th>Duration</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for log in logs %}
+            <tr>
+              <td><span>{{ log.device.device_type.icon }}</span> {{ log.device.name }}</td>
+              <td>
+                {% if log.time_off %}
+                  <span class="status-off">OFF</span>
+                {% else %}
+                  <span class="status-on">ON</span>
+                {% endif %}
+              </td>
+              <td>{{ log.time_on|date:"Y-m-d H:i:s" }}</td>
+              <td>
+                {% if log.time_off %}
+                  {{ log.time_off|date:"Y-m-d H:i:s" }}
+                {% else %}
+                  Running
+                {% endif %}
+              </td>
+              <td>
+                {{ log.duration_str }}
+              </td>
+            </tr>
+          {% empty %}
+            <tr><td colspan="5">No usage logs found.</td></tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer class="footer">
+  &copy; {% now "Y" %} Smart Switching System. All rights reserved.
+</footer>
+
+</body>
+</html>

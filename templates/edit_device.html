@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="main-content">
+  <h2>Edit Device Request</h2>
+  <form method="POST">
+    {% csrf_token %}
+    <label for="name">Device Name</label>
+    <input type="text" name="name" id="name" value="{{ req.name }}" required>
+
+    <label for="device_type">Device Type</label>
+    <select name="device_type" id="device_type" required>
+      {% for dt in device_types %}
+        <option value="{{ dt.id }}" {% if req.device_type.id == dt.id %}selected{% endif %}>{{ dt.name }}</option>
+      {% endfor %}
+    </select>
+
+    <button type="submit" class="btn-add">Save Changes</button>
+    <a href="{% url 'manage_devices' %}" class="btn btn-secondary">Cancel</a>
+  </form>
+</div>
+{% endblock %}

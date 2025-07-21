@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">        
+    <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Smart Switching System</title>
+<style>
+    body {
+        font-family: 'Roboto', Arial, sans-serif;
+        background-color: #f4f6fb;
+        margin: 0;
+        padding: 0;
+    }
+  .about-header {
+    background-color: #1a237e;
+    color: #fff;
+    padding: 60px 20px;
+    text-align: center;
+  }
+
+  .about-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+
+  .about-header p {
+    font-size: 1.1rem;
+    color: #cfd8dc;
+    max-width: 800px;
+    margin: 0 auto;
+  }
+
+  .about-section {
+    padding: 60px 20px;
+    background: #f9f9f9;
+  }
+
+  .about-section h2 {
+    color: #1a237e;
+    text-align: center;
+    font-size: 1.8rem;
+    margin-bottom: 30px;
+  }
+
+  .about-content {
+    max-width: 900px;
+    margin: 0 auto;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #4b5e8e;
+  }
+
+  .team-section {
+    background: #fff;
+    padding: 60px 20px;
+    text-align: center;
+  }
+
+  .team-section h2 {
+    color: #1a237e;
+    margin-bottom: 30px;
+  }
+
+  .team-members {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .member {
+    background: #f5f7fa;
+    border-radius: 10px;
+    padding: 20px;
+    width: 220px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+  }
+
+  .member h4 {
+    color: #1a237e;
+    margin: 10px 0 5px;
+  }
+
+  .member p {
+    font-size: 0.9rem;
+    color: #4b5e8e;
+  }
+
+  @media (max-width: 768px) {
+    .team-members {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+  .footer {
+  background: #1a237e;
+  color: #ffffff;
+  padding: 20px 10px;
+  text-align: center;
+  font-size: 0.95rem;
+  margin-top: 60px;
+}
+
+.footer a {
+  color: #ffca28;
+  text-decoration: none;
+  margin: 0 8px;
+}
+
+.footer a:hover {
+  text-decoration: underline;
+}
+
+.custom-header {
+  background-color: #1a237e;
+  color: #fff;
+  padding: 20px 0;
+  text-align: center;
+}
+
+.custom-header h1 {
+  font-size: 2rem;
+  margin: 0;
+  letter-spacing: 1px;
+}
+
+
+.custom-header nav {
+  margin-top: 10px;
+}
+
+.custom-header nav a {
+  color: #fff;
+  margin: 0 12px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.custom-header nav a:hover {
+  color: #ffca28;
+}
+</style>
+
+<!-- HEADER -->
+<header class="custom-header">
+  <h1>Voice and Web based Home Electronic Devices Switching System</h1>
+  <nav>
+    <a href="{% url 'home' %}">Home</a>
+    <a href="{% url 'about' %}">About</a>
+    <a href="{% url 'support' %}">Support</a>
+    <a href="{% url 'contact' %}">Contact</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'user_dashboard' %}">Dashboard</a>
+      <a href="{% url 'logout' %}">Logout</a>
+    {% else %}
+      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'register' %}">Register</a>
+    {% endif %}
+  </nav>
+</header>
+
+<!-- DESCRIPTION -->
+<section class="about-section">
+  <h2>Our Mission</h2>
+  <div class="about-content">
+    <p>
+      The Smart Switching System was built to bring intelligent automation to everyday homes. With a combination of intuitive web dashboards and voice control, users can interact with their electronic devices with ease, safety, and flexibility.
+    </p>
+    <p>
+      This system simulates a real house environment where users can register, request devices like lights and fans, and get approval from administrators. Once configured, users can toggle devices through the interface or by speaking natural commands like “Turn on fan”.
+    </p>
+    <p>
+      Our goal is to offer a solution that’s not only innovative but also practical and adaptable to real-world needs — especially in areas looking to digitize their home energy systems.
+    </p>
+  </div>
+</section>
+
+<!-- TEAM -->
+<section class="team-section">
+  <h2>Meet the Team</h2>
+  <div class="team-members">
+    <div class="member">
+      <h4>Group 6 Members</h4>
+      <p>Project Developer & System Designer</p>
+    </div>
+    <div class="member">
+      <h4>ESP32 Hardware</h4>
+      <p>Microcontroller Integration</p>
+    </div>
+    <div class="member">
+      <h4>Django Web App</h4>
+      <p>Backend & Dashboard</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  &copy; {% now "Y" %} Voice and Web based Home Electronic Devices Switching System. All rights reserved.
+</footer>

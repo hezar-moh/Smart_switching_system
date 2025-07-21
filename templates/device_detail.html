@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block title %}Device Details | Voice and Web based Home Electronic Devices Switching System{% endblock %}
+{% block content %}
+<div class="dashboard-container">
+    <div class="sidebar">
+        <h2>Smart Control</h2>
+        <a href="{% url 'user_dashboard' %}" class="{% if request.resolver_match.url_name == 'user_dashboard' %}active{% endif %}">Dashboard</a>
+        <a href="{% url 'manage_devices' %}" class="{% if request.resolver_match.url_name == 'manage_devices' %}active{% endif %}">Manage Devices</a>
+        <a href="{% url 'device_logs' %}" class="{% if request.resolver_match.url_name == 'device_logs' %}active{% endif %}">Logs</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+    <div class="main-content">
+        <h1>{{ device.name }}</h1>
+        <div class="device-info">
+            <p><span>💡</span> {{ device.name }}</p>
+            <p><strong>Status</strong> <span class="status">{{ device.status|upper }}</span></p>
+            <p><strong>Device Type</strong> {{ device.device_type.name }}</p>
+            <p><strong>Location</strong> {{ device.location }}</p>
+            <p><strong>Actions</strong>
+                <a href="{% url 'edit_device_name' device.id %}">✏️ Edit</a>
+                <a href="{% url 'delete_device' device.id %}">🗑️ Delete</a>
+            </p>
+            <form method="post" action="{% url 'toggle_device' device.id %}">
+                {% csrf_token %}
+                <button class="btn-voice" type="button">Voice Command</button>
+                {% if device.status == "on" %}
+                    <button class="btn-off" type="submit">Turn OFF</button>
+                {% else %}
+                    <button class="btn-on" type="submit">Turn ON</button>
+                {% endif %}
+            </form>
+        </div>
+        <div class="usage-history">
+            <h2>Usage History</h2>
+            {% if usage_history %}
+            <table class="usage-table">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Time On</th>
+                        <th>Time Off</th>
+                        <th>Duration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for log in usage_history %}
+                    <tr>
+                        <td>{{ log.time_on.date }}</td>
+                        <td>{{ log.time_on }}</td>
+                        <td>{{ log.time_off|default:"--" }}</td>
+                        <td>{{ log.duration_str }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            {% else %}
+            <p>No usage history available.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}
