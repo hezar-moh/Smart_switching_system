@@ -4,3 +4,6 @@ git commit -m "first commit"
 git branch -M main
 git remote add origin https://github.com/hezar-moh/Smart_switching_system.git
 git push -u origin main
+
+
+###run full of that once you do any changes
