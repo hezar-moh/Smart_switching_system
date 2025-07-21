@@ -14,13 +14,6 @@ email = kabeho@gmail.com  pasword=123
 ////// web and voice based, home electronic devices switching system/////////
 
 
-
-
-
-
-
-
-
 //////////ARDUINO CODE///////////
 
 #include <WiFi.h>
